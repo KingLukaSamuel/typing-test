@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lu Typing Test</title>
+</head>
+<body>
+    <center><h1>Lu Typing Test.</h1></center>
+    <hr>
+   <div align="right"> <b >Time</b></div><div align="right" id="timer"></div>
+    <div align="right" id="score">
+        Correct Words is:
+        <div id="cw"></div>
+        Wrong wors is :
+        <div id="ww"></div>
+        Words Per Minitus:
+        <div id="wpm"></div>
+        Accurancy is:
+        <div id="acc"></div>
+
+    </div>
+    <div id="dis"></div>
+    <input type="text" id="txt" autofocus dir="ltr" value="" dir="ltr" placeholder="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" >
+</body>
+</html>
+<script>
+    var wpm=0;
+    var correct=0;
+var wrong=0;
+var rand = Math.floor((Math.random() * 3) + 0);
+
+   var msg="The truly happy person doesn’t follow wicked advice doesn’t stand on the road of sinners and doesn’t sit with the disrespectful. Instead of doing those things, these persons love the Lord Instruction and they recite God Instruction day and night! They are like a tree replanted by streams of water which bears fruit at just the right time ";
+   var msg1="Long, long ago in Kyoto, the people of the city were terrified by accounts of a dreadful ogre, who, it was said, haunted the Gate of Rashomon at twilight and seized whoever passed by. The missing victims were never seen again, so it was whispered that the ogre was a horrible cannibal, who not only killed the unhappy victims but ate them also. Now everybody in the town and neighborhood was in great fear, and no one durst venture out after sunset near the Gate of Rashomon.";
+   var msg2="Now at this time there lived in Kyoto a general named Raiko, who had made himself famous for his brave deeds. Some time before this he made the country ring with his name, for he had attacked Oeyama, where a band of ogres lived with their chief, who instead of wine drank the blood of human beings. He had routed them all and cut off the head of the chief monster.";
+  var ma=[msg,msg1,msg2];
+  function lu_dis(){
+   var arr = ma[rand].split(' ');
+
+    for(var i=0;i<arr.length;i++)
+    {
+    
+  var sp = document.createElement("span");
+sp.setAttribute("id",i);
+sp.innerHTML=arr[i]+" ";
+  document.getElementById('dis').appendChild(sp);
+    }
+}
+lu_dis();
+document.onkeydown=function()
+{
+    
+    var key = event.keyCode;
+if (key==32) {
+    lu_tst();
+    percentage()
+}
+}
+function lu_high(tst)
+{
+    document.getElementById(tst).setAttribute("class","highlete");
+
+}
+
+var tst=0;
+function lu_tst()
+{
+
+    var msg=document.getElementById('dis').innerText;
+    var arr1 = msg.split(' ');
+var chk=document.getElementById('txt').value;
+var chk=chk.trim();
+if(arr1[tst]==chk)
+{
+
+    document.getElementById('txt').value = ""; 
+   document.getElementById(tst).setAttribute("class","crt");
+   correct=correct+1;
+   document.getElementById('cw').innerHTML=correct;
+   wpm=wpm+1;
+}
+else{
+    document.getElementById('txt').value = "";
+    document.getElementById(tst).setAttribute("class","wrg"); 
+    wrong=wrong+1;
+    document.getElementById('ww').innerHTML=wrong;
+wpm=wpm+1;
+
+}
+tst=tst+1;
+lu_high(tst);
+}
+function percentage()
+{
+   // var num=document.getElementById('cw').innerText;
+  //  var per=document.getElementById('ww').innerText;
+  //var per=(50/100)*num;
+  //document.getElementById('acc').innerHTML=per;
+  var ep=(wpm*wrong)/100;
+  var per=100-ep;
+  document.getElementById('wpm').innerHTML=wpm;
+  document.getElementById('acc').innerHTML=per;
+}
+var timer=0;
+ var tim= setInterval( function(){
+    if(timer==59)
+    {
+    clearInterval(tim);
+    document.getElementById('score').style.display="block";
+    document.getElementById("txt").disabled = true;
+
+    }
+timer=timer+1;
+document.getElementById('timer').innerHTML=timer;
+  },500);
+
+</script>
+<style>
+    body{
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 24px;
+    
+    }
+    #dis{
+        width: 850px;
+        height: 250px;
+        background-color: rgba(128, 147, 233, 0.11);
+    }
+    #txt
+    {
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        color: rgb(41, 28, 235);
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 18px;
+    }
+    .crt
+    {
+        color:green;
+    }
+    .wrg{
+        color: red;
+    }
+    .highlete{
+        background-color: rgb(80, 55, 221);
+    }
+    #score
+    {
+        float: right;
+        width: 180px;
+        height: 320px;
+        color: green;
+        background-color: rgb(12, 31, 194);
+        box-shadow: 5px 2px 2px 4px #830505;
+        display: none;
+    }
+</style>
